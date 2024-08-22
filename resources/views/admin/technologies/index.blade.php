@@ -3,6 +3,12 @@
 
 @section('content')
     <div class="container p-3">
+        <div class="mb-3">
+            <a href="{{ route('admin.technologies.create') }}">
+                <i class="fa-solid fa-plus"></i>
+                add new technology
+            </a>
+        </div>
         <div class="row">
             @foreach ($technologies as $technology)
                 <div class="col-4 mb-3">

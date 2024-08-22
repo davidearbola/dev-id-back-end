@@ -2,6 +2,12 @@
 
 @section('content')
     <div class="container p-3">
+        <div class="mb-3">
+            <a href="{{ route('admin.types.create') }}">
+                <i class="fa-solid fa-plus"></i>
+                add new type
+            </a>
+        </div>
         <div class="row">
             @foreach ($types as $type)
                 <div class="col-4 mb-3">
