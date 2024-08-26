@@ -3,10 +3,14 @@
 @section('content')
     <div class="row py-3">
         <div class="col-4">
-            <h5><i class="{{ $technology->icon }} fs-1"></i></h5>
+            @if (Str::startsWith($technology->image, 'http'))
+                <img class="w-100" src="{{ $technology->image }}">
+            @else
+                <img class="w-100" src="{{ asset('storage/' . $technology->image) }}">
+            @endif
         </div>
         <div class="col-8">
-            <h5 class="card-title">{{ $technology->name }}</h5>
+            <h5 class="card-title">{{ $technology->name }} <i class="{{ $technology->icon }}"></i></h5>
         </div>
     </div>
     <div class="mt-2 d-flex">

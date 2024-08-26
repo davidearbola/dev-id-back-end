@@ -3,7 +3,7 @@
 @section('content')
     <div class="py-3">
         <h4>Edit technology: {{ $technology->name }}</h4>
-        <form method="POST" action="{{ route('admin.technologies.update', $technology->id) }}">
+        <form method="POST" action="{{ route('admin.technologies.update', $technology->id) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="mb-4 row">
@@ -24,6 +24,18 @@
                     <input id="icon_technology" type="text" class="form-control @error('icon') is-invalid @enderror"
                         name="icon" value="{{ old('icon', $technology->icon) }}" required autofocus>
                     @error('icon')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+            <div class="mb-4 row">
+                <label for="image_technology" class="col-md-2 col-form-label text-md-right">Image</label>
+                <div class="col-md-10">
+                    <input id="image_technology" type="file" class="form-control @error('image') is-invalid @enderror"
+                        name="image">
+                    @error('image')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

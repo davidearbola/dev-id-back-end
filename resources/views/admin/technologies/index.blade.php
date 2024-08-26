@@ -13,11 +13,15 @@
             @foreach ($technologies as $technology)
                 <div class="col-4 mb-3">
                     <div class="card" style="width: 18rem;">
-                        <div class="text-center py-3">
-                            <i class="{{ $technology->icon }} fs-1"></i>
+                        <div class="text-center py-2">
+                            @if (Str::startsWith($technology->image, 'http'))
+                                <img class="card-img-top w-50" src="{{ $technology->image }}">
+                            @else
+                                <img class="card-img-top w-50" src="{{ asset('storage/' . $technology->image) }}">
+                            @endif
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">{{ $technology->name }}</h5>
+                            <h5 class="card-title">{{ $technology->name }} <i class="{{ $technology->icon }}"></i></h5>
                         </div>
                         <div class="card-footer">
                             <a class="text-decoration-none text-dark btn p-0"
