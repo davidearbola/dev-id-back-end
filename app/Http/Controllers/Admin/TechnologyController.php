@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Technology;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class TechnologyController extends Controller
 {
@@ -35,8 +37,14 @@ class TechnologyController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|min:3',
-            'icon' => 'required'
+            'icon' => 'required',
+            'image' => 'image'
         ]);
+
+        if ($request->has('image')) {
+            $image = Storage::put('uploads', $request->image);
+            $data['image'] = $image;
+        }
 
         $newLanguage = new Technology();
         $newLanguage->fill($data);
@@ -75,9 +83,21 @@ class TechnologyController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|min:3',
-            'icon' => 'required'
+            'icon' => 'required',
+            'image' => 'image'
         ]);
+
+        if ($request->has('image')) {
+            $image = Storage::put('uploads', $request->image);
+            $data['image'] = $image;
+
+            if ($technology->image && !Str::startsWith($technology->image, 'http')) {
+                Storage::delete($technology->image);
+            }
+        }
+
         $technology->update($data);
+
         return redirect()->route('admin.technologies.show', $technology);
     }
 
@@ -86,6 +106,10 @@ class TechnologyController extends Controller
      */
     public function destroy(Technology $technology)
     {
+        if ($technology->image && !Str::startsWith($technology->image, 'http')) {
+            Storage::delete($technology->image);
+        }
+
         $technology->delete();
         return redirect()->route('admin.technologies.index');
     }

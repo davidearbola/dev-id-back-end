@@ -11,7 +11,8 @@ class Technology extends Model
 
     protected $fillable = [
         'name',
-        'icon'
+        'icon',
+        'image'
     ];
 
     public function projects()
